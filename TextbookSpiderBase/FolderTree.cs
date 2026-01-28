@@ -1,43 +1,52 @@
+using CSharpFunctionalExtensions;
+
 namespace TextbookSpider;
+
+public record Book
+{
+    public required string Title { get; init; }
+    public required string Id { get; init; }
+}
 
 public record Folder
 {
-    public required string? Name { get; init; }
+    public required Maybe<string> Name { get; init; }
     public required IEnumerable<Folder> Subfolders { get; init; }
-    public required IEnumerable<BookInfo> Books { get; init; }
-}
+    public required IEnumerable<Book> Books { get; init; }
 
-public static class FolderTree
-{
-    public static Folder MapFolderTree(TagTreeNode tagTreeNode, IEnumerable<BookInfo> bookInfos)
+    public static Folder MapTree(TagTreeNode node, BookInfo[] bookInfos, IEnumerable<string> parentNodes)
     {
-        var name = tagTreeNode.Name;
-        var subfolders = tagTreeNode.Children.Select(child => MapFolderTree(child, bookInfos));
-        var books = bookInfos.Where(book => book.Tags.Contains(tagTreeNode.Name));
+        var currentNodes = node.Name.HasValue ? parentNodes.Append(node.Name.Value) : parentNodes;
+        var currentNodesArray = currentNodes.ToArray();
+        var subfolders =
+            from child in node.Children
+            select MapTree(child, bookInfos, currentNodesArray);
+
+        if (node.Name.HasNoValue)
+        {
+            return new Folder
+            {
+                Name = Maybe<string>.None,
+                Subfolders = subfolders,
+                Books = []
+            };
+        }
+
+        var books =
+            from bookInfo in bookInfos
+            where currentNodesArray.All(bookInfo.Tags.Contains)
+            where bookInfo.Title.HasValue
+            select new Book
+            {
+                Title = bookInfo.Title.Value,
+                Id = bookInfo.Id
+            };
+
         return new Folder
         {
-            Name = name,
+            Name = node.Name,
             Subfolders = subfolders,
             Books = books
-        };
-    }
-
-    public static Folder SortTags(Folder folder, IEnumerable<string> rootTags)
-    {
-        var name = folder.Name;
-        var currentTags = name is not null
-            ? rootTags.Append(name)
-            : rootTags;
-
-        return folder with
-        {
-            Subfolders =
-            from child in folder.Subfolders
-            select SortTags(child, currentTags),
-            
-            Books =
-            from book in folder.Books
-            select book with { Tags = currentTags }
         };
     }
 }
