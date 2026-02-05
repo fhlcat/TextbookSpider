@@ -14,7 +14,7 @@ public static class Download
     )
     {
         var path = Path.Combine(directoryInfo.FullName, book.Title + ".pdf");
-        Log.Information("Downloading {BookTitle} to {Path}", book.Title, path);
+        Log.Information("Downloading {BookTitle}", book.Title);
         var urlResult = await Fetch.FetchUrlAsync(book.Id, downloadMethods.GetStringAsync, CancellationToken.None);
         if (urlResult.IsFailure)
         {
@@ -30,6 +30,7 @@ public static class Download
                 using var fileStream = new FileStream(path, FileMode.Create);
                 stream.CopyTo(fileStream);
                 stream.Dispose();
+                Log.Information("Downloaded {BookTitle}", book.Title);
             },
             error => Log.Error("Failed to download {BookTitle}: {Error}", book.Title, error)
         );

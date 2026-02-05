@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextbookSpiderBase", "Textb
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextbookSpiderCli", "TextbookSpiderCli\TextbookSpiderCli.csproj", "{956729A7-7F46-484A-BE43-3B4F0CE4282B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextbookSpiderWpf", "TextbookSpiderWpf\TextbookSpiderWpf.csproj", "{12453577-62C6-4EC1-8C96-ACAC814CE6C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{956729A7-7F46-484A-BE43-3B4F0CE4282B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{956729A7-7F46-484A-BE43-3B4F0CE4282B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{956729A7-7F46-484A-BE43-3B4F0CE4282B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12453577-62C6-4EC1-8C96-ACAC814CE6C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12453577-62C6-4EC1-8C96-ACAC814CE6C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12453577-62C6-4EC1-8C96-ACAC814CE6C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12453577-62C6-4EC1-8C96-ACAC814CE6C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
