@@ -4,16 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600"
+        Title="MainWindow" Height="600" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        ResizeMode="CanMinimize">
+>
     <Grid Margin="12">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <GroupBox Grid.Column="0" Header="folder" Padding="4">
+        <GroupBox Grid.Column="0" Header="folder" Padding="8">
             <TreeView
                 Name="FoldersTreeView"
                 BorderThickness="0"
@@ -26,50 +29,52 @@
             </TreeView>
         </GroupBox>
 
-        <Grid Grid.Column="1" Margin="12 0 0 0">
+        <GroupBox Grid.Column="2" Padding="8" Header="downloading option">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Margin="0 0 0 4">saving path</TextBlock>
+                <Grid Grid.Row="1" Margin=" 0 0 0 8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Padding="4" />
+                    <Button Grid.Column="1" Padding="4" Margin="4 0 0 0">Browse</Button>
+                </Grid>
+                <TextBlock Grid.Row="2" Margin="0 0 0 4">auth</TextBlock>
+                <TextBox Grid.Row="3"
+                         Padding="4"
+                         Text="{Binding MainViewmodel.Auth, Mode=OneWayToSource}"
+                         TextWrapping="Wrap" />
+
+            </Grid>
+        </GroupBox>
+
+        <Grid Grid.Column="4">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <GroupBox Grid.Row="0" Header="downloading option">
-                <Grid Margin="8">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0">auth</TextBlock>
-                    <TextBox Grid.Row="1"
-                             Padding="4"
-                             Text="{Binding MainViewmodel.Auth, Mode=OneWayToSource}"
-                             TextWrapping="Wrap" />
-                    <TextBlock Grid.Row="2" Margin="0 4 0 0">save path</TextBlock>
-                    <Grid Grid.Row="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBox Padding="4" />
-                        <Button Grid.Column="1" Padding="4" Margin="4 0 0 0">Browse</Button>
-                    </Grid>
-                </Grid>
-            </GroupBox>
-
-            <GroupBox Grid.Row="1" Margin="0 8 0 0" Header="progress">
-                <ScrollViewer Padding="4" VerticalScrollBarVisibility="Auto">
+            <GroupBox Grid.Row="0" Padding="8" Margin="0 0 0 12" Header="log">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <TextBlock Text="{Binding LogsText, Mode=OneWay}" TextWrapping="Wrap" />
                 </ScrollViewer>
             </GroupBox>
 
-            <Button Grid.Row="2" Padding="8" Margin="0 16 0 0"
+            <Button Grid.Row="1" Padding="8"
                     Command="{Binding MainViewmodel.StartWorkingCommand}"
                     CommandParameter="{Binding SelectedValue, ElementName=FoldersTreeView, Mode=OneWay}">
                 Start
             </Button>
         </Grid>
+
     </Grid>
 </Window>
